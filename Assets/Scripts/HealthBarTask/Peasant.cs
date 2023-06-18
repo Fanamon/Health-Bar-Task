@@ -1,39 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
-[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(BarDisplayOutput))]
 public class Peasant : MonoBehaviour
 {
-    [SerializeField] private TMP_Text _healthText;
-    [SerializeField] private Slider _healthBar;
     [SerializeField] private float _health;
 
-    private Animator _animator;
+    private BarDisplayOutput _output;
 
     private float _maxHealth;
-
-    public float Health => _health;
+    private float _currentValuePercentage;
 
     private void Awake()
     {
-        _animator = GetComponent<Animator>();
+        _output = GetComponent<BarDisplayOutput>();
 
         _maxHealth = _health;
     }
 
     private void Update()
     {
-        _healthText.text = $"{_health} / {_maxHealth}";
-        _healthBar.value = Mathf.MoveTowards(_healthBar.value, _health / _maxHealth, Time.deltaTime);
+        _currentValuePercentage = _health / _maxHealth;
 
-        if (_health == 0 && _healthBar.value == 0)
+        _output.WriteBarText(_health, _maxHealth);
+        _output.ChangeBarValue(_currentValuePercentage, Time.deltaTime);
+
+        if (_health == 0 && _output.IsCurrentBarValueNull)
         {
             Peasant peasant = gameObject.GetComponent<Peasant>();
 
-            _animator.SetTrigger(AnimatorTriggers.Killed);
+            _output.SetAnimatorTrigger(AnimatorTriggers.Killed);
 
             Destroy(peasant);
         }
@@ -41,7 +38,7 @@ public class Peasant : MonoBehaviour
 
     public void TakeDamage(float damageValue)
     {
-        _animator.SetTrigger(AnimatorTriggers.Damaged);
+        _output.SetAnimatorTrigger(AnimatorTriggers.Damaged);
 
         if (_health - damageValue < 0)
         {
@@ -55,7 +52,7 @@ public class Peasant : MonoBehaviour
 
     public void TakeHeal(float healValue)
     {
-        _animator.SetTrigger(AnimatorTriggers.Healed);
+        _output.SetAnimatorTrigger(AnimatorTriggers.Healed);
 
         if (_health + healValue > _maxHealth)
         {
