@@ -452,20 +452,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 866475715}
-        m_TargetAssemblyTypeName: ColorChanger, Assembly-CSharp
-        m_MethodName: SetPosition
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1454021828}
-        m_TargetAssemblyTypeName: ImageColorChanger, Assembly-CSharp
+      - m_Target: {fileID: 1007662678}
+        m_TargetAssemblyTypeName: BarDisplayOutput, Assembly-CSharp
         m_MethodName: SetPosition
         m_Mode: 0
         m_Arguments:
@@ -1020,7 +1008,6 @@ GameObject:
   - component: {fileID: 866475712}
   - component: {fileID: 866475714}
   - component: {fileID: 866475713}
-  - component: {fileID: 866475715}
   m_Layer: 5
   m_Name: HealthText
   m_TagString: Untagged
@@ -1145,19 +1132,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 866475711}
   m_CullTransparentMesh: 1
---- !u!114 &866475715
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 866475711}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ac55f6d8b5d4304c8db9146282542c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _lowValueColor: {r: 1, g: 0.08196721, b: 0, a: 1}
 --- !u!1 &912274027
 GameObject:
   m_ObjectHideFlags: 0
@@ -1347,8 +1321,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d64e8c06444364648af8e31029f1f294, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthText: {fileID: 866475713}
+  _barText: {fileID: 866475713}
+  _barImage: {fileID: 1454021826}
   _healthBar: {fileID: 351380469}
+  _lowValueColor: {r: 1, g: 0.08235294, b: 0, a: 1}
 --- !u!1 &1454021824
 GameObject:
   m_ObjectHideFlags: 0
@@ -1360,7 +1336,6 @@ GameObject:
   - component: {fileID: 1454021825}
   - component: {fileID: 1454021827}
   - component: {fileID: 1454021826}
-  - component: {fileID: 1454021828}
   m_Layer: 5
   m_Name: FillArea
   m_TagString: Untagged
@@ -1426,19 +1401,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1454021824}
   m_CullTransparentMesh: 1
---- !u!114 &1454021828
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1454021824}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 377420871a2f15844a5e6dbaae73f8d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _lowValueColor: {r: 1, g: 0.08235294, b: 0, a: 1}
 --- !u!1 &1850671743
 GameObject:
   m_ObjectHideFlags: 0
