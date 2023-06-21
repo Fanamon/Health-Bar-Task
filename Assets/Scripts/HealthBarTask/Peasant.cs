@@ -21,12 +21,13 @@ public class Peasant : MonoBehaviour
 
     private void Update()
     {
+        _health = Mathf.Clamp(_health, 0f, _maxHealth);
         _currentValuePercentage = _health / _maxHealth;
 
         _output.WriteBarText(_health, _maxHealth);
         _output.ChangeBarValue(_currentValuePercentage, Time.deltaTime);
 
-        if (_health == 0 && _output.IsCurrentBarValueNull)
+        if (_health == 0)
         {
             Peasant peasant = gameObject.GetComponent<Peasant>();
 
@@ -40,27 +41,13 @@ public class Peasant : MonoBehaviour
     {
         _output.SetAnimatorTrigger(AnimatorTriggers.Damaged);
 
-        if (_health - damageValue < 0)
-        {
-            _health = 0 ;
-        }
-        else
-        {
-            _health -= damageValue;
-        }
+        _health -= damageValue;
     }
 
     public void TakeHeal(float healValue)
     {
         _output.SetAnimatorTrigger(AnimatorTriggers.Healed);
 
-        if (_health + healValue > _maxHealth)
-        {
-            _health = _maxHealth;
-        }
-        else
-        {
-            _health += healValue;
-        }
+        _health += healValue;
     }
 }

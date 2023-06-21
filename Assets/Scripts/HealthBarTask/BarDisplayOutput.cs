@@ -15,10 +15,6 @@ public class BarDisplayOutput : MonoBehaviour
     private Animator _animator;
     private Color _maxValueColor;
 
-    private bool _isCurrentBarValueNull;
-
-    public bool IsCurrentBarValueNull => _isCurrentBarValueNull;
-
     private void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -32,7 +28,7 @@ public class BarDisplayOutput : MonoBehaviour
         _maxValueColor = _barImage.color;
     }
 
-    public void SetPosition(float position)
+    public void SetColorPosition(float position)
     {
         _barText.color = Color.Lerp(_lowValueColor, _maxValueColor, position);
         _barImage.color = Color.Lerp(_lowValueColor, _maxValueColor, position);
@@ -50,8 +46,23 @@ public class BarDisplayOutput : MonoBehaviour
 
     public void ChangeBarValue(float currentValuePercentage, float timeDelta)
     {
-        _healthBar.value = Mathf.MoveTowards(_healthBar.value, currentValuePercentage, timeDelta);
+        if (currentValuePercentage != 0)
+        {
+            _healthBar.value = Mathf.MoveTowards(_healthBar.value, currentValuePercentage, timeDelta);
+        }
+        else
+        {
+            StartCoroutine(MakeBarValueNull());
+        }
+    }
 
-        _isCurrentBarValueNull = _healthBar.value == 0;
+    private IEnumerator MakeBarValueNull()
+    {
+        while (_healthBar.value != 0f)
+        {
+            _healthBar.value = Mathf.MoveTowards(_healthBar.value, 0f, Time.deltaTime);
+
+            yield return null;
+        }
     }
 }
