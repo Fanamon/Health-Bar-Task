@@ -371,6 +371,7 @@ GameObject:
   m_Component:
   - component: {fileID: 351380468}
   - component: {fileID: 351380469}
+  - component: {fileID: 351380470}
   m_Layer: 5
   m_Name: HealthBar
   m_TagString: Untagged
@@ -452,9 +453,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1007662678}
+      - m_Target: {fileID: 351380470}
         m_TargetAssemblyTypeName: BarDisplayOutput, Assembly-CSharp
-        m_MethodName: SetPosition
+        m_MethodName: SetColorPosition
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -462,6 +463,104 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &351380470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 351380467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d64e8c06444364648af8e31029f1f294, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _character: {fileID: 1007662677}
+  _barText: {fileID: 866475713}
+  _barImage: {fileID: 1454021826}
+  _healthBar: {fileID: 351380469}
+  _lowValueColor: {r: 1, g: 0.08235294, b: 0, a: 1}
+  _damaged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1007662677}
+        m_TargetAssemblyTypeName: Peasant, Assembly-CSharp
+        m_MethodName: TakeDamage
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 10
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1007662679}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: SetTrigger
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 10
+          m_StringArgument: Damaged
+          m_BoolArgument: 0
+        m_CallState: 2
+  _healed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1007662677}
+        m_TargetAssemblyTypeName: Peasant, Assembly-CSharp
+        m_MethodName: TakeHeal
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 10
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1007662679}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: SetTrigger
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 10
+          m_StringArgument: Healed
+          m_BoolArgument: 0
+        m_CallState: 2
+  _killed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1007662677}
+        m_TargetAssemblyTypeName: Peasant, Assembly-CSharp
+        m_MethodName: BeKilled
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1007662679}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: SetTrigger
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Killed
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &482872091
@@ -812,10 +911,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1007662677}
-        m_TargetAssemblyTypeName: Peasant, Assembly-CSharp
-        m_MethodName: TakeDamage
-        m_Mode: 4
+      - m_Target: {fileID: 351380470}
+        m_TargetAssemblyTypeName: BarDisplayOutput, Assembly-CSharp
+        m_MethodName: Damage
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1282,9 +1381,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1000010854855540, guid: a3c1faf915dc240bca8ed7566d46910c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1007662677}
-    - targetCorrespondingSourceObject: {fileID: 1000010854855540, guid: a3c1faf915dc240bca8ed7566d46910c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1007662678}
   m_SourcePrefab: {fileID: 100100000, guid: a3c1faf915dc240bca8ed7566d46910c, type: 3}
 --- !u!4 &1007662675 stripped
 Transform:
@@ -1309,22 +1405,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: 100
---- !u!114 &1007662678
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+--- !u!95 &1007662679 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 95000013227593822, guid: a3c1faf915dc240bca8ed7566d46910c, type: 3}
+  m_PrefabInstance: {fileID: 1007662674}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1007662676}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d64e8c06444364648af8e31029f1f294, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _barText: {fileID: 866475713}
-  _barImage: {fileID: 1454021826}
-  _healthBar: {fileID: 351380469}
-  _lowValueColor: {r: 1, g: 0.08235294, b: 0, a: 1}
 --- !u!1 &1454021824
 GameObject:
   m_ObjectHideFlags: 0
@@ -1485,10 +1570,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1007662677}
-        m_TargetAssemblyTypeName: Peasant, Assembly-CSharp
-        m_MethodName: TakeHeal
-        m_Mode: 4
+      - m_Target: {fileID: 351380470}
+        m_TargetAssemblyTypeName: BarDisplayOutput, Assembly-CSharp
+        m_MethodName: Heal
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
