@@ -18,6 +18,8 @@ public class BarDisplayOutput : MonoBehaviour
 
     private Color _maxValueColor;
 
+    private Coroutine _barValueDisplayer;
+
     private float _currentValuePercentage;
 
     private void Awake()
@@ -72,7 +74,13 @@ public class BarDisplayOutput : MonoBehaviour
         _currentValuePercentage = _character.Health / _character.MaxHealth;
 
         WriteBarText(_character.Health, _character.MaxHealth);
-        StartCoroutine(ChangeBarValue(_currentValuePercentage));
+
+        if (_barValueDisplayer != null)
+        {
+            StopCoroutine(_barValueDisplayer);
+        }
+
+        _barValueDisplayer = StartCoroutine(ChangeBarValue(_currentValuePercentage));
     }
 
     private void WriteBarText(float currentValue, float maxValue)

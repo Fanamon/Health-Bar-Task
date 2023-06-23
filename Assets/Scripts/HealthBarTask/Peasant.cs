@@ -33,9 +33,7 @@ public class Peasant : MonoBehaviour
 
     public void BeKilled()
     {
-        Peasant peasant = gameObject.GetComponent<Peasant>();
-
-        Destroy(peasant);
+        Destroy(this);
     }
 
     private void ValidateValue()
