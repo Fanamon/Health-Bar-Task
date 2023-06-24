@@ -3,33 +3,37 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using UnityEngine.Events;
 
 public class BarDisplayOutput : MonoBehaviour
 {
-    [SerializeField] private Peasant _character;
+    [SerializeField] private Peasant _player;
     [SerializeField] private TMP_Text _barText;
     [SerializeField] private Image _barImage;
     [SerializeField] private Slider _healthBar;
     [SerializeField] private Color _lowValueColor;
-    [SerializeField] private UnityEvent _damaged;
-    [SerializeField] private UnityEvent _healed;
-    [SerializeField] private UnityEvent _killed;
 
     private Color _maxValueColor;
 
     private Coroutine _barValueDisplayer;
-
-    private float _currentValuePercentage;
 
     private void Awake()
     {
         LoadFromColor();
     }
 
+    private void OnEnable()
+    {
+        _player.OnHealthChanged += DisplayBarChanges;
+    }
+
+    private void OnDisable()
+    {
+        _player.OnHealthChanged -= DisplayBarChanges;
+    }
+
     private void Start()
     {
-        DisplayBarChanges();
+        StartCoroutine(ChangeBarValue(_player.MaxHealth));
     }
 
     [ContextMenu("Load From Color")]
@@ -44,43 +48,14 @@ public class BarDisplayOutput : MonoBehaviour
         _barImage.color = Color.Lerp(_lowValueColor, _maxValueColor, position);
     }
 
-    public void Damage()
+    private void DisplayBarChanges(float currentValue)
     {
-        if (_character != null)
-        {
-            _damaged.Invoke();
-
-            DisplayBarChanges();
-
-            if (_character.Health == 0)
-            {
-                _killed.Invoke();
-            }
-        }
-    }
-
-    public void Heal()
-    {
-        if (_character != null)
-        {
-            _healed.Invoke();
-
-            DisplayBarChanges();
-        }
-    }
-
-    private void DisplayBarChanges()
-    {
-        _currentValuePercentage = _character.Health / _character.MaxHealth;
-
-        WriteBarText(_character.Health, _character.MaxHealth);
-
         if (_barValueDisplayer != null)
         {
             StopCoroutine(_barValueDisplayer);
         }
 
-        _barValueDisplayer = StartCoroutine(ChangeBarValue(_currentValuePercentage));
+        _barValueDisplayer = StartCoroutine(ChangeBarValue(currentValue));
     }
 
     private void WriteBarText(float currentValue, float maxValue)
@@ -88,8 +63,12 @@ public class BarDisplayOutput : MonoBehaviour
         _barText.text = $"{currentValue} / {maxValue}";
     }
 
-    private IEnumerator ChangeBarValue(float currentValuePercentage)
+    private IEnumerator ChangeBarValue(float currentValue)
     {
+        float currentValuePercentage = currentValue / _player.MaxHealth;
+
+        WriteBarText(currentValue, _player.MaxHealth);
+
         while (_healthBar.value != currentValuePercentage)
         {
             _healthBar.value = Mathf.MoveTowards(_healthBar.value, currentValuePercentage, Time.deltaTime);
