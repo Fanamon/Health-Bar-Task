@@ -8,9 +8,9 @@ public class Peasant : MonoBehaviour
 {
     [SerializeField] private float _health;
 
-    public UnityAction<float> OnHealthChanged;
-
     private Animator _animator;
+
+    public event UnityAction<float> OnHealthChanged;
 
     public float MaxHealth { get; private set; }
 
