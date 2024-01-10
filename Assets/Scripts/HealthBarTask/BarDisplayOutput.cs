@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
@@ -23,12 +22,12 @@ public class BarDisplayOutput : MonoBehaviour
 
     private void OnEnable()
     {
-        _player.OnHealthChanged += DisplayBarChanges;
+        _player.HealthChanged += OnHealthChanged;
     }
 
     private void OnDisable()
     {
-        _player.OnHealthChanged -= DisplayBarChanges;
+        _player.HealthChanged -= OnHealthChanged;
     }
 
     private void Start()
@@ -48,7 +47,7 @@ public class BarDisplayOutput : MonoBehaviour
         _barImage.color = Color.Lerp(_lowValueColor, _maxValueColor, position);
     }
 
-    private void DisplayBarChanges(float currentValue)
+    private void OnHealthChanged(float currentValue)
     {
         if (_barValueDisplayer != null)
         {

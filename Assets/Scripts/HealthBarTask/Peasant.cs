@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,7 +8,7 @@ public class Peasant : MonoBehaviour
 
     private Animator _animator;
 
-    public event UnityAction<float> OnHealthChanged;
+    public event UnityAction<float> HealthChanged;
 
     public float MaxHealth { get; private set; }
 
@@ -25,7 +23,7 @@ public class Peasant : MonoBehaviour
     {
         _health -= damageValue;
 
-        _animator.SetTrigger("Damaged");
+        _animator.SetTrigger(PeasantAnimatorTrigger.Damaged);
 
         ValidateValue();
 
@@ -39,16 +37,16 @@ public class Peasant : MonoBehaviour
     {
         _health += healValue;
 
-        _animator.SetTrigger("Healed");
+        _animator.SetTrigger(PeasantAnimatorTrigger.Healed);
 
         ValidateValue();
     }
 
     private void BeKilled()
     {
-        OnHealthChanged?.Invoke(_health);
+        HealthChanged?.Invoke(_health);
 
-        _animator.SetTrigger("Killed");
+        _animator.SetTrigger(PeasantAnimatorTrigger.Killed);
 
         Destroy(this);
     }
@@ -57,6 +55,6 @@ public class Peasant : MonoBehaviour
     {
         _health = Mathf.Clamp(_health, 0f, MaxHealth);
 
-        OnHealthChanged?.Invoke(_health);
+        HealthChanged?.Invoke(_health);
     }
 }
